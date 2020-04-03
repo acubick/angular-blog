@@ -1,18 +1,20 @@
-<div class="post">
-  <div class="header">
-            <h1>Post title</h1>
-    <button routerLink="/" class="btn btn-link">На главную</button>
+<div *ngIf="post$ | async as post; else loading">
+  <div class="post">
+    <div class="header">
+              <h1>{{ post.title }}</h1>
+      <button routerLink="/" class="btn btn-link">На главную</button>
+    </div>
+    <div class="info">
+      <strong>{{ post.author }}</strong>
+      <small>{{ post.date | date: 'medium':null:'ru' }}</small>
+    </div>
+    <!-- /.info -->
+   <quill-view-html [content]="post.text"></quill-view-html>
   </div>
-  <div class="info">
-    <strong>Тут автор</strong>
-    <small>12.09.2019</small>
-  </div>
-  <!-- /.info -->
-  <div>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus repellat sint ut? Amet asperiores at, consectetur ex excepturi inventore ipsam, laboriosam, libero nihil ratione sit sunt. Asperiores dicta distinctio enim illum incidunt! Ad aliquam assumenda eligendi illo nulla. Ab asperiores consequuntur cumque dolorem ducimus facere incidunt ipsum nobis provident quis!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus repellat sint ut? Amet asperiores at, consectetur ex excepturi inventore ipsam, laboriosam, libero nihil ratione sit sunt. Asperiores dicta distinctio enim illum incidunt! Ad aliquam assumenda eligendi illo nulla. Ab asperiores consequuntur cumque dolorem ducimus facere incidunt ipsum nobis provident quis!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus repellat sint ut? Amet asperiores at, consectetur ex excepturi inventore ipsam, laboriosam, libero nihil ratione sit sunt. Asperiores dicta distinctio enim illum incidunt! Ad aliquam assumenda eligendi illo nulla. Ab asperiores consequuntur cumque dolorem ducimus facere incidunt ipsum nobis provident quis!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus repellat sint ut? Amet asperiores at, consectetur ex excepturi inventore ipsam, laboriosam, libero nihil ratione sit sunt. Asperiores dicta distinctio enim illum incidunt! Ad aliquam assumenda eligendi illo nulla. Ab asperiores consequuntur cumque dolorem ducimus facere incidunt ipsum nobis provident quis!</p>
-  </div>
+  <!-- /.post -->
 </div>
-<!-- /.post -->
+<ng-template #loading>
+       <p class="text-center">
+         Загружаю пост...
+       </p>
+</ng-template>
