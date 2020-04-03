@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { FbCreateResponse, Post } from './interfaces';
 
@@ -36,8 +36,27 @@ export class PostsService {
           })
        )
    }
+
+
+  getById(id: string): Observable<Post>{
+
+     return this.http.get<Post>(`${environment.fbDbUrl}/posts/${id}.json`)
+           .pipe(
+             map((post: Post) => {
+             return{
+               ...post, id,
+               date: new Date(post.date)
+             }
+           })
+           )
+   }
+
    remove(id: string): Observable<void>  {
       return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`)
+   }
+
+   update(post:Post): Observable<Post>{
+     return this.http.patch<Post>(`${environment.fbDbUrl}/posts/${post.id}.json`, post)
    }
 
 }
